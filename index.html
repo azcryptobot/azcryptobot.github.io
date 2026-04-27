@@ -540,6 +540,75 @@
             margin-bottom: 20px;
             line-height: 1.5;
         }
+
+        /* Channels */
+        .channel-group-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 20px 0 10px;
+            padding-left: 2px;
+        }
+
+        .channel-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 14px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s ease;
+        }
+
+        .channel-item:active {
+            transform: scale(0.98);
+            background: var(--bg-card-hover);
+        }
+
+        .channel-item + .channel-item {
+            margin-top: 8px;
+        }
+
+        .channel-icon {
+            font-size: 20px;
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f0f0f;
+            border-radius: 12px;
+        }
+
+        .channel-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .channel-name {
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .channel-cat {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .channel-arrow {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -553,8 +622,9 @@
 
     <!-- Tabs -->
     <div class="tab-bar">
-        <button class="active" onclick="switchTab('commands', this)">Commands</button>
-        <button onclick="switchTab('pricing', this)">Pricing</button>
+        <button class="active" onclick="switchTab('commands', this)">&#x1F4CB; Commands</button>
+        <button onclick="switchTab('pricing', this)">&#x1F4B3; Pricing</button>
+        <button onclick="switchTab('channels', this)">&#x1F31F; Channels</button>
     </div>
 
     <!-- ========== TAB: Commands ========== -->
@@ -937,7 +1007,7 @@
 
             <div class="footer">
                 AzCryptoBot &mdash; Not financial advice. Trade at your own risk.<br>
-                <a href="https://t.me/AzCryptoBot" target="_blank">@AzCryptoBot</a>
+                <a href="https://t.me/AzCryptoBot" target="_blank">@AzCryptoBot</a> &middot; <a href="https://t.me/vfluxa" target="_blank">@vfluxa</a>
             </div>
 
         </div>
@@ -989,7 +1059,36 @@
 
             <div class="footer">
                 AzCryptoBot &mdash; Not financial advice. Trade at your own risk.<br>
-                <a href="https://t.me/AzCryptoBot" target="_blank">@AzCryptoBot</a>
+                <a href="https://t.me/AzCryptoBot" target="_blank">@AzCryptoBot</a> &middot; <a href="https://t.me/vfluxa" target="_blank">@vfluxa</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ========== TAB: Channels ========== -->
+    <div class="tab-content" id="tab-channels">
+        <div class="container">
+
+            <div style="padding-top: 20px;">
+                <div class="pricing-section-header">&#x1F31F; Premium Channels</div>
+                <div class="pricing-section-desc">Exclusive signal channels included with Pro lifetime plan</div>
+            </div>
+
+            <div class="premium-banner" style="margin-top: 0;">
+                <h3>Get access to <span>all channels</span></h3>
+                <p>Purchase the lifetime Pro version to unlock every premium channel below</p>
+            </div>
+
+            <div id="channels-content"></div>
+
+            <div class="cta-group">
+                <a class="btn btn-primary" href="https://t.me/AzCryptoBot?start=pro" target="_blank">Activate Pro</a>
+                <a class="btn btn-secondary" href="https://t.me/AzCryptoBot" target="_blank">Open Bot</a>
+            </div>
+
+            <div class="footer">
+                AzCryptoBot &mdash; Not financial advice. Trade at your own risk.<br>
+                <a href="https://t.me/AzCryptoBot" target="_blank">@AzCryptoBot</a> &middot; <a href="https://t.me/vfluxa" target="_blank">@vfluxa</a>
             </div>
 
         </div>
@@ -1074,6 +1173,64 @@
         }
 
         renderPricing();
+
+        const premiumChannels = [
+            { name: 'RSI Signals - Binance Futures', url: 'https://t.me/kpbtcsignal/31466', emoji: '✅', group: 'Reversal / Indicator / Futures' },
+            { name: 'All RSIs Up/Down', url: 'https://t.me/+99T_NPI91qExZmVl', emoji: '🔰', group: 'Reversal / Indicator' },
+            { name: 'RSI Overvalue H4 D1 W1', url: 'https://t.me/+buTxGEUmTaY1OTk1', emoji: '🔴', group: 'Reversal / Indicator' },
+            { name: 'Price Flash Changes - Spot', url: 'https://t.me/+0xKC44GHeEY1YzFl', emoji: '💥', group: 'Indicator / Spot' },
+            { name: 'Price Flash Changes - Futures', url: 'https://t.me/+ww6L47fJcqE4ZmQ1', emoji: '🔦', group: 'Indicator / Futures' },
+            { name: 'TradingView Ideas', url: 'https://t.me/+FH1ZgCLXIkM1MmFl', emoji: '📊', group: 'Indicator / News' },
+            { name: 'TradingView Ideas Vietnamese', url: 'https://t.me/+nyf0zq6zrhVjZWFl', emoji: '📉', group: 'Indicator / News / Vietnamese' },
+            { name: 'SuperTrend Reversal', url: 'https://t.me/+rBMPc5A6OucwYzFl', emoji: '🎯', group: 'Reversal / Indicator' },
+            { name: 'Parabolic SAR Reversal', url: 'https://t.me/+tHHKd5fnx9gyMmZl', emoji: '🏖️', group: 'Reversal / Indicator' },
+            { name: 'Reversal Patterns (Doji, Hammer, Engulfing)', url: 'https://t.me/+VH8ERmlEEqthNzhl', emoji: '🔥', group: 'Reversal / Indicator' },
+            { name: 'Trend Line Breaker Alert', url: 'https://t.me/+7XArWdJHnwBmZTI1', emoji: '📈', group: 'Indicator / Spot' },
+            { name: 'All In One Signals', url: 'https://t.me/+ZQnPu378bao1MDll', emoji: '👩‍🚀', group: 'Reversal / Indicator' },
+            { name: 'Bollinger Band Reversal', url: 'https://t.me/+_BnqkVrE68MyNzM1', emoji: '🎯', group: 'Reversal / Indicator' },
+            { name: 'MACD Momentum Reversal', url: 'https://t.me/+-Z30P9RY-xo3NDJl', emoji: '⭐', group: 'Reversal / Indicator' },
+            { name: 'Tweezer And Star Reversal', url: 'https://t.me/+pc7Mu_6a-HJlYTg1', emoji: '🤩', group: 'Reversal / Indicator' },
+            { name: 'Volume Tracker M1 Futures', url: 'https://t.me/+nOaW5OTBvjI0ZWE1', emoji: '⏲️', group: 'Volume / Futures' },
+            { name: 'Vol Tracker M15 Spot - 16 Exchanges', url: 'https://t.me/+ZIzuI0Zpoq1kNDE1', emoji: '📊', group: 'Volume / Spot' },
+            { name: 'Crypto Calls Summary (50+ channels)', url: 'https://t.me/+TpX8qlxVzhg4Nzll', emoji: '🤙', group: 'Indicator / Whale' },
+        ];
+
+        function renderChannels() {
+            const groups = {};
+            premiumChannels.forEach(c => {
+                const key = c.group;
+                if (!groups[key]) groups[key] = [];
+                groups[key].push(c);
+            });
+
+            let html = '';
+            const orderedGroups = [
+                'Reversal / Indicator / Futures',
+                'Reversal / Indicator',
+                'Indicator / Futures',
+                'Indicator / Spot',
+                'Indicator / News',
+                'Indicator / News / Vietnamese',
+                'Volume / Futures',
+                'Volume / Spot',
+                'Indicator / Whale',
+            ];
+
+            orderedGroups.forEach(g => {
+                if (!groups[g]) return;
+                html += '<div class="channel-group-title">' + g + '</div>';
+                groups[g].forEach(c => {
+                    html += '<a class="channel-item" href="' + c.url + '" target="_blank">' +
+                        '<div class="channel-icon">' + c.emoji + '</div>' +
+                        '<div class="channel-info"><div class="channel-name">' + c.name + '</div></div>' +
+                        '<div class="channel-arrow">❯</div></a>';
+                });
+            });
+
+            document.getElementById('channels-content').innerHTML = html;
+        }
+
+        renderChannels();
 
         function openBot(command) {
             const url = 'https://t.me/' + BOT_USERNAME + '?start=' + encodeURIComponent(command);
