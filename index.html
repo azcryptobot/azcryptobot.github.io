@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AzCryptoBot - All-in-One Crypto Trading Assistant</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --tg-theme-bg-color: #0f0f1a;
+            --tg-theme-text-color: #ffffff;
+            --tg-theme-hint-color: #8b8b9e;
+            --tg-theme-button-color: #2a2a3c;
+            --tg-theme-button-text-color: #ffffff;
+            --tg-theme-secondary-bg-color: #1a1a2e;
+            --accent: #6c5ce7;
+            --accent-light: #a29bfe;
+            --green: #00d2d3;
+            --red: #ff6b6b;
+            --gold: #ffd32a;
+            --card-bg: rgba(42, 42, 60, 0.6);
+            --card-border: rgba(255, 255, 255, 0.06);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Animated background */
+        .bg-gradient {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(108, 92, 231, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(0, 210, 211, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(108, 92, 231, 0.05) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 0 30px;
+        }
+
+        .logo-wrap {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 20px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--accent), var(--green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            box-shadow: 0 8px 32px rgba(108, 92, 231, 0.35);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: var(--tg-theme-hint-color);
+            font-size: 14px;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        /* Stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 16px 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card .num {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .stat-card .label {
+            font-size: 11px;
+            color: var(--tg-theme-hint-color);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Feature sections */
+        .section {
+            margin: 24px 0;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title .icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .icon-price { background: rgba(0, 210, 211, 0.15); }
+        .icon-chart { background: rgba(108, 92, 231, 0.15); }
+        .icon-signal { background: rgba(255, 211, 42, 0.15); }
+        .icon-future { background: rgba(255, 107, 107, 0.15); }
+        .icon-news { background: rgba(46, 213, 115, 0.15); }
+        .icon-tool { background: rgba(162, 155, 254, 0.15); }
+
+        .feature-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-item:active {
+            transform: scale(0.98);
+            background: rgba(108, 92, 231, 0.15);
+        }
+
+        .feature-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-emoji {
+            font-size: 20px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+        }
+
+        .feature-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .feature-desc {
+            font-size: 11px;
+            color: var(--tg-theme-hint-color);
+            margin-top: 2px;
+        }
+
+        .cmd-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-light);
+            background: rgba(108, 92, 231, 0.15);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
+        .cmd-tag.green { color: var(--green); background: rgba(0, 210, 211, 0.12); }
+        .cmd-tag.gold { color: var(--gold); background: rgba(255, 211, 42, 0.12); }
+        .cmd-tag.red { color: var(--red); background: rgba(255, 107, 107, 0.12); }
+
+        /* Premium banner */
+        .premium-banner {
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(0, 210, 211, 0.1));
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            border-radius: 18px;
+            padding: 24px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.08) 0%, transparent 70%);
+            animation: rotate 8s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .premium-banner h3 {
+            font-size: 20px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .premium-banner h3 span {
+            background: linear-gradient(135deg, var(--gold), #ff9f43);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .premium-banner p {
+            color: var(--tg-theme-hint-color);
+            font-size: 13px;
+            margin: 10px 0 18px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .premium-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .premium-tag {
+            font-size: 11px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--accent-light);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* CTA buttons */
+        .cta-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+        }
+
+        .btn:active { transform: scale(0.97); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #8b7cf7);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--tg-theme-text-color);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-group {
+            background: rgba(0, 210, 211, 0.1);
+            color: var(--green);
+            border: 1px solid rgba(0, 210, 211, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            color: var(--tg-theme-hint-color);
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.05s; }
+        .fade-in:nth-child(2) { animation-delay: 0.1s; }
+        .fade-in:nth-child(3) { animation-delay: 0.15s; }
+        .fade-in:nth-child(4) { animation-delay: 0.2s; }
+        .fade-in:nth-child(5) { animation-delay: 0.25s; }
+        .fade-in:nth-child(6) { animation-delay: 0.3s; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 0; }
+
+        /* Telegram theme support */
+        body.tg-theme {
+            --tg-theme-bg-color: var(--tg-bg-color, #0f0f1a);
+            --tg-theme-text-color: var(--tg-text-color, #ffffff);
+            --tg-theme-hint-color: var(--tg-hint-color, #8b8b9e);
+            --tg-theme-button-color: var(--tg-button-color, #2a2a3c);
+            --tg-theme-button-text-color: var(--tg-button-text-color, #ffffff);
+            --tg-theme-secondary-bg-color: var(--tg-secondary-bg-color, #1a1a2e);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header fade-in">
+            <div class="logo-wrap">&#x1F4B0;</div>
+            <h1>AzCryptoBot</h1>
+            <p>All-in-one crypto trading assistant<br>for Telegram</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row fade-in">
+            <div class="stat-card">
+                <div class="num">200+</div>
+                <div class="label">Commands</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">20+</div>
+                <div class="label">Exchanges</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">Free</div>
+                <div class="label">Core Features</div>
+            </div>
+        </div>
+
+        <!-- Price Tracking -->
+        <div class="section fade-in">
+            <div class="section-title">
+                <div class="icon icon-price">&#x1F4B0;</div>
+                Price Tracking
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item" onclick="openBot('p')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4B2;</div>
+                        <div>
+                            <div class="feature-name">Quick Price</div>
+                            <div class="feature-desc">Instant prices for any coin</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/p</span>
+                </div>
+                <div class="feature-item" onclick="openBot('wt')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F440;</div>
+                        <div>
+                            <div class="feature-name">Watchlist</div>
+                            <div class="feature-desc">Track your favorite tokens</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/wt</span>
+                </div>
+                <div class="feature-item" onclick="openBot('pp')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4C8;</div>
+                        <div>
+                            <div class="feature-name">Detail Prices</div>
+                            <div class="feature-desc">Full market data & stats</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/pp</span>
+                </div>
+                <div class="feature-item" onclick="openBot('notif')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F514;</div>
+                        <div>
+                            <div class="feature-name">Price Alerts</div>
+                            <div class="feature-desc">Notified at your target price</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag">/notif</span>
+                </div>
+                <div class="feature-item" onclick="openBot('val')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4B3;</div>
+                        <div>
+                            <div class="feature-name">Value Converter</div>
+                            <div class="feature-desc">Crypto to fiat & vice versa</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/val</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts & Analysis -->
+        <div class="section fade-in">
+            <div class="section-title">
+                <div class="icon icon-chart">&#x1F4CA;</div>
+                Charts & Analysis
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item" onclick="openBot('ch')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4C9;</div>
+                        <div>
+                            <div class="feature-name">Price Charts</div>
+                            <div class="feature-desc">Binance, Gate.io, Mexc & more</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/ch</span>
+                </div>
+                <div class="feature-item" onclick="openBot('ideas')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4A1;</div>
+                        <div>
+                            <div class="feature-name">TradingView Ideas</div>
+                            <div class="feature-desc">Community trading analysis</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag">/ideas</span>
+                </div>
+                <div class="feature-item" onclick="openBot('hmap')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F5FA;</div>
+                        <div>
+                            <div class="feature-name">Heatmaps</div>
+                            <div class="feature-desc">Market cap & RSI heatmaps</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag gold">/hmap</span>
+                </div>
+                <div class="feature-item" onclick="openBot('ta')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F9E0;</div>
+                        <div>
+                            <div class="feature-name">Technical Analysis</div>
+                            <div class="feature-desc">AI-powered TA for any token</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag">/ta</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trading Signals -->
+        <div class="section fade-in">
+            <div class="section-title">
+                <div class="icon icon-signal">&#x1F4E1;</div>
+                Trading Signals
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item" onclick="openBot('tp')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F3AF;</div>
+                        <div>
+                            <div class="feature-name">TP/SL Calculator</div>
+                            <div class="feature-desc">Fibonacci-based targets</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag gold">/tp</span>
+                </div>
+                <div class="feature-item" onclick="openBot('rsi')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4C9;</div>
+                        <div>
+                            <div class="feature-name">RSI Scanner</div>
+                            <div class="feature-desc">Overbought & oversold signals</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag gold">/rsi</span>
+                </div>
+                <div class="feature-item" onclick="openBot('macd')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4E2;</div>
+                        <div>
+                            <div class="feature-name">MACD Signals</div>
+                            <div class="feature-desc">Momentum & crossover alerts</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag gold">/macd</span>
+                </div>
+                <div class="feature-item" onclick="openBot('buy')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4B0;</div>
+                        <div>
+                            <div class="feature-name">Buy/Sell Calculator</div>
+                            <div class="feature-desc">Calculate P&L at any price</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/buy</span>
+                </div>
+                <div class="feature-item" onclick="openBot('fib')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F3AF;</div>
+                        <div>
+                            <div class="feature-name">Fibonacci Levels</div>
+                            <div class="feature-desc">Auto fib retracement zones</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag gold">/fib</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Futures -->
+        <div class="section fade-in">
+            <div class="section-title">
+                <div class="icon icon-future">&#x1F4B9;</div>
+                Futures
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item" onclick="openBot('pf')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4C8;</div>
+                        <div>
+                            <div class="feature-name">Futures Price</div>
+                            <div class="feature-desc">Perpetual contract prices</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag red">/pf</span>
+                </div>
+                <div class="feature-item" onclick="openBot('lsratio')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x2696;</div>
+                        <div>
+                            <div class="feature-name">Long/Short Ratio</div>
+                            <div class="feature-desc">Binance futures sentiment</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag red">/lsratio</span>
+                </div>
+                <div class="feature-item" onclick="openBot('fdr')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4B3;</div>
+                        <div>
+                            <div class="feature-name">Funding Rate</div>
+                            <div class="feature-desc">Real-time funding rates</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag red">/fdr</span>
+                </div>
+                <div class="feature-item" onclick="openBot('oi')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4B0;</div>
+                        <div>
+                            <div class="feature-name">Open Interest</div>
+                            <div class="feature-desc">Track OI changes</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag red">/oi</span>
+                </div>
+                <div class="feature-item" onclick="openBot('rekt')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F525;</div>
+                        <div>
+                            <div class="feature-name">Liquidations</div>
+                            <div class="feature-desc">Futures liquidation data</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag red">/rekt</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market & News -->
+        <div class="section fade-in">
+            <div class="section-title">
+                <div class="icon icon-news">&#x1F4F0;</div>
+                Market & News
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item" onclick="openBot('trending')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4C8;</div>
+                        <div>
+                            <div class="feature-name">Trending Coins</div>
+                            <div class="feature-desc">Most searched on CoinGecko</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/trending</span>
+                </div>
+                <div class="feature-item" onclick="openBot('coins')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1FA99;</div>
+                        <div>
+                            <div class="feature-name">Top Market Cap</div>
+                            <div class="feature-desc">CoinMarketCap top coins</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/coins</span>
+                </div>
+                <div class="feature-item" onclick="openBot('news')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4F0;</div>
+                        <div>
+                            <div class="feature-name">Crypto News</div>
+                            <div class="feature-desc">Latest VN & global news</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/news</span>
+                </div>
+                <div class="feature-item" onclick="openBot('fgi')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F628;</div>
+                        <div>
+                            <div class="feature-name">Fear & Greed Index</div>
+                            <div class="feature-desc">Market sentiment gauge</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag">/fgi</span>
+                </div>
+                <div class="feature-item" onclick="openBot('etf')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4C8;</div>
+                        <div>
+                            <div class="feature-name">Bitcoin ETF</div>
+                            <div class="feature-desc">Latest ETF flow data</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/etf</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools -->
+        <div class="section fade-in">
+            <div class="section-title">
+                <div class="icon icon-tool">&#x1F6E0;</div>
+                Tools & Utilities
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item" onclick="openBot('wallet')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F575;</div>
+                        <div>
+                            <div class="feature-name">Wallet Tracker</div>
+                            <div class="feature-desc">View any wallet balances</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag">/wallet</span>
+                </div>
+                <div class="feature-item" onclick="openBot('dca')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4C8;</div>
+                        <div>
+                            <div class="feature-name">DCA Calculator</div>
+                            <div class="feature-desc">Plan your dollar-cost avg</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag green">/dca</span>
+                </div>
+                <div class="feature-item" onclick="openBot('gold')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1FA99;</div>
+                        <div>
+                            <div class="feature-name">Gold Price</div>
+                            <div class="feature-desc">Vietnam gold rates</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag gold">/gold</span>
+                </div>
+                <div class="feature-item" onclick="openBot('port')">
+                    <div class="feature-left">
+                        <div class="feature-emoji">&#x1F4BC;</div>
+                        <div>
+                            <div class="feature-name">Portfolio Manager</div>
+                            <div class="feature-desc">Track your holdings</div>
+                        </div>
+                    </div>
+                    <span class="cmd-tag gold">/port</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Premium Banner -->
+        <div class="premium-banner fade-in">
+            <h3>Unlock <span>Pro</span></h3>
+            <p>Get access to advanced features including<br>custom signals, AI analysis, and more</p>
+            <div class="premium-features">
+                <span class="premium-tag">Custom Watchlist Signals</span>
+                <span class="premium-tag">Price Volume Alerts</span>
+                <span class="premium-tag">RSI Notifications</span>
+                <span class="premium-tag">Priority Support</span>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-group fade-in">
+            <a class="btn btn-primary" href="https://t.me/AzCryptoBot" target="_blank">
+                Open Bot
+            </a>
+            <a class="btn btn-group" href="https://t.me/AzCryptoBot?startgroup=botstart" target="_blank">
+                Add to Group
+            </a>
+            <a class="btn btn-secondary" href="https://t.me/AzCryptoBot?start=commands" target="_blank">
+                View All Commands
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer fade-in">
+            AzCryptoBot &mdash; Not financial advice. Trade at your own risk.<br>
+            <a href="https://t.me/AzCryptoBot" target="_blank">@AzCryptoBot</a>
+        </div>
+    </div>
+
+    <script>
+        const BOT_USERNAME = 'AzCryptoBot';
+
+        function openBot(command) {
+            const url = `https://t.me/${BOT_USERNAME}?start=${encodeURIComponent(command)}`;
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.openTelegramLink(url);
+            } else {
+                window.open(url, '_blank');
+            }
+        }
+
+        // Apply Telegram theme
+        document.addEventListener('DOMContentLoaded', function () {
+            const webApp = window.Telegram && window.Telegram.WebApp;
+            if (webApp) {
+                webApp.ready();
+                webApp.expand();
+
+                const theme = webApp.themeParams;
+                if (theme) {
+                    const root = document.documentElement;
+                    if (theme.bg_color) root.style.setProperty('--tg-theme-bg-color', theme.bg_color);
+                    if (theme.text_color) root.style.setProperty('--tg-theme-text-color', theme.text_color);
+                    if (theme.hint_color) root.style.setProperty('--tg-theme-hint-color', theme.hint_color);
+                    if (theme.button_color) root.style.setProperty('--tg-theme-button-color', theme.button_color);
+                    if (theme.button_text_color) root.style.setProperty('--tg-theme-button-text-color', theme.button_text_color);
+                    if (theme.secondary_bg_color) root.style.setProperty('--tg-theme-secondary-bg-color', theme.secondary_bg_color);
+                }
+
+                document.body.style.backgroundColor = theme.bg_color || '#0f0f1a';
+            }
+        });
+    </script>
+</body>
+</html>
