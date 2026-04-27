@@ -11,25 +11,23 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --tg-theme-bg-color: #0f0f1a;
-            --tg-theme-text-color: #ffffff;
-            --tg-theme-hint-color: #8b8b9e;
-            --tg-theme-button-color: #2a2a3c;
-            --tg-theme-button-text-color: #ffffff;
-            --tg-theme-secondary-bg-color: #1a1a2e;
+            --bg: #000000;
+            --bg-card: #111111;
+            --bg-card-hover: #1a1a1a;
+            --border: #222222;
+            --text: #ffffff;
+            --text-secondary: #888888;
             --accent: #6c5ce7;
             --accent-light: #a29bfe;
             --green: #00d2d3;
             --red: #ff6b6b;
             --gold: #ffd32a;
-            --card-bg: rgba(42, 42, 60, 0.6);
-            --card-border: rgba(255, 255, 255, 0.06);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--tg-theme-bg-color);
-            color: var(--tg-theme-text-color);
+            background: #000000;
+            color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -40,10 +38,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background:
-                radial-gradient(ellipse at 20% 0%, rgba(108, 92, 231, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 100%, rgba(0, 210, 211, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(108, 92, 231, 0.05) 0%, transparent 70%);
+            background: #000000;
             z-index: -1;
         }
 
@@ -89,7 +84,7 @@
         }
 
         .header p {
-            color: var(--tg-theme-hint-color);
+            color: var(--text-secondary);
             font-size: 14px;
             margin-top: 8px;
             line-height: 1.5;
@@ -104,12 +99,11 @@
         }
 
         .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 16px 12px;
             text-align: center;
-            backdrop-filter: blur(10px);
         }
 
         .stat-card .num {
@@ -120,7 +114,7 @@
 
         .stat-card .label {
             font-size: 11px;
-            color: var(--tg-theme-hint-color);
+            color: var(--text-secondary);
             margin-top: 4px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -150,12 +144,12 @@
             font-size: 16px;
         }
 
-        .icon-price { background: rgba(0, 210, 211, 0.15); }
-        .icon-chart { background: rgba(108, 92, 231, 0.15); }
-        .icon-signal { background: rgba(255, 211, 42, 0.15); }
-        .icon-future { background: rgba(255, 107, 107, 0.15); }
-        .icon-news { background: rgba(46, 213, 115, 0.15); }
-        .icon-tool { background: rgba(162, 155, 254, 0.15); }
+        .icon-price { background: #0a1a1a; }
+        .icon-chart { background: #0a0a1a; }
+        .icon-signal { background: #1a1a0a; }
+        .icon-future { background: #1a0a0a; }
+        .icon-news { background: #0a1a0a; }
+        .icon-tool { background: #0a0a1a; }
 
         .feature-grid {
             display: flex;
@@ -167,8 +161,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 14px;
             padding: 14px 16px;
             cursor: pointer;
@@ -178,7 +172,7 @@
 
         .feature-item:active {
             transform: scale(0.98);
-            background: rgba(108, 92, 231, 0.15);
+            background: var(--bg-card-hover);
         }
 
         .feature-left {
@@ -194,7 +188,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.04);
+            background: #0f0f0f;
             border-radius: 10px;
         }
 
@@ -205,7 +199,7 @@
 
         .feature-desc {
             font-size: 11px;
-            color: var(--tg-theme-hint-color);
+            color: var(--text-secondary);
             margin-top: 2px;
         }
 
@@ -213,20 +207,20 @@
             font-size: 11px;
             font-weight: 600;
             color: var(--accent-light);
-            background: rgba(108, 92, 231, 0.15);
+            background: #0f0a1a;
             padding: 4px 10px;
             border-radius: 8px;
             font-family: 'SF Mono', 'Fira Code', monospace;
         }
 
-        .cmd-tag.green { color: var(--green); background: rgba(0, 210, 211, 0.12); }
-        .cmd-tag.gold { color: var(--gold); background: rgba(255, 211, 42, 0.12); }
-        .cmd-tag.red { color: var(--red); background: rgba(255, 107, 107, 0.12); }
+        .cmd-tag.green { color: var(--green); background: #0a1212; }
+        .cmd-tag.gold { color: var(--gold); background: #12120a; }
+        .cmd-tag.red { color: var(--red); background: #120a0a; }
 
         /* Premium banner */
         .premium-banner {
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(0, 210, 211, 0.1));
-            border: 1px solid rgba(108, 92, 231, 0.3);
+            background: linear-gradient(135deg, #111111, #0a0a0a);
+            border: 1px solid #2a2a2a;
             border-radius: 18px;
             padding: 24px;
             margin: 30px 0;
@@ -242,7 +236,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(108, 92, 231, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.04) 0%, transparent 70%);
             animation: rotate 8s linear infinite;
         }
 
@@ -265,7 +259,7 @@
         }
 
         .premium-banner p {
-            color: var(--tg-theme-hint-color);
+            color: var(--text-secondary);
             font-size: 13px;
             margin: 10px 0 18px;
             position: relative;
@@ -285,9 +279,9 @@
             font-size: 11px;
             padding: 5px 12px;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.06);
+            background: #1a1a1a;
             color: var(--accent-light);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid #2a2a2a;
         }
 
         /* CTA buttons */
@@ -323,23 +317,22 @@
         }
 
         .btn-secondary {
-            background: var(--card-bg);
-            color: var(--tg-theme-text-color);
-            border: 1px solid var(--card-border);
-            backdrop-filter: blur(10px);
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid var(--border);
         }
 
         .btn-group {
-            background: rgba(0, 210, 211, 0.1);
+            background: #0a1a1a;
             color: var(--green);
-            border: 1px solid rgba(0, 210, 211, 0.2);
+            border: 1px solid #1a2a2a;
         }
 
         /* Footer */
         .footer {
             text-align: center;
             padding: 20px 0;
-            color: var(--tg-theme-hint-color);
+            color: var(--text-secondary);
             font-size: 12px;
         }
 
@@ -369,15 +362,155 @@
         /* Scrollbar */
         ::-webkit-scrollbar { width: 0; }
 
-        /* Telegram theme support */
-        body.tg-theme {
-            --tg-theme-bg-color: var(--tg-bg-color, #0f0f1a);
-            --tg-theme-text-color: var(--tg-text-color, #ffffff);
-            --tg-theme-hint-color: var(--tg-hint-color, #8b8b9e);
-            --tg-theme-button-color: var(--tg-button-color, #2a2a3c);
-            --tg-theme-button-text-color: var(--tg-button-text-color, #ffffff);
-            --tg-theme-secondary-bg-color: var(--tg-secondary-bg-color, #1a1a2e);
+        /* Pricing */
+        .pricing-toggle {
+            display: flex;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
         }
+
+        .pricing-toggle button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .pricing-toggle button.active {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .pricing-type-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pricing-type-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .pricing-type-btn.active {
+            border-color: var(--accent);
+            color: var(--text);
+            background: #0f0a1a;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        .pricing-table th,
+        .pricing-table td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .pricing-table thead th {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 10px;
+        }
+
+        .pricing-table tbody tr {
+            transition: background 0.15s ease;
+        }
+
+        .pricing-table tbody tr:hover {
+            background: #0a0a0a;
+        }
+
+        .pricing-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pricing-plan {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .pricing-plan .badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-popular {
+            background: #1a0a1a;
+            color: var(--gold);
+        }
+
+        .badge-best {
+            background: #0a1a0a;
+            color: var(--green);
+        }
+
+        .pricing-value {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .pricing-save {
+            font-size: 10px;
+            color: var(--green);
+            margin-top: 2px;
+        }
+
+        .pricing-note {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .pricing-note a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+
+        .pricing-type-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
     </style>
 </head>
 <body>
@@ -759,6 +892,33 @@
             </div>
         </div>
 
+        <!-- Pricing -->
+        <div class="section fade-in" id="pricing">
+            <div class="section-title">
+                <div class="icon" style="background: #12120a;">&#x1F4B3;</div>
+                Pricing
+            </div>
+
+            <div class="pricing-toggle">
+                <button class="active" onclick="switchCurrency('vnd', this)">VND</button>
+                <button onclick="switchCurrency('usd', this)">USD</button>
+            </div>
+
+            <div class="pricing-type-toggle">
+                <button class="pricing-type-btn active" onclick="switchType('private', this)">&#x1F464; Private</button>
+                <button class="pricing-type-btn" onclick="switchType('group', this)">&#x1F465; Group</button>
+            </div>
+
+            <div class="pricing-type-label" id="type-label">Only you can use Pro features</div>
+
+            <div id="pricing-content"></div>
+
+            <div class="pricing-note" style="margin-top: 14px;">
+                &#x1F929; Special: When you purchase the lifetime version, you gain access to
+                <a href="https://t.me/AzCryptoBot?start=ListFreeChannels-Premium" target="_blank">&#x1F48E; Premium Channels &#x1F48E;</a>
+            </div>
+        </div>
+
         <!-- CTA -->
         <div class="cta-group fade-in">
             <a class="btn btn-primary" href="https://t.me/AzCryptoBot" target="_blank">
@@ -782,6 +942,81 @@
     <script>
         const BOT_USERNAME = 'AzCryptoBot';
 
+        const pricingData = {
+            vnd: {
+                private: [
+                    { plan: '3 Months', price: '220,000 VND', save: null },
+                    { plan: '1 Year', price: '440,000 VND', save: 'Save 50%', popular: true },
+                    { plan: '3 Years', price: '660,000 VND', save: 'Save 75%' },
+                    { plan: 'Forever', price: '990,000 VND', save: 'Save 99%', best: true },
+                ],
+                group: [
+                    { plan: '3 Months', price: '440,000 VND', save: null },
+                    { plan: '1 Year', price: '880,000 VND', save: 'Save 50%', popular: true },
+                    { plan: '3 Years', price: '1,350,000 VND', save: 'Save 74%' },
+                    { plan: 'Forever', price: '2,200,000 VND', save: 'Save 99%', best: true },
+                ],
+            },
+            usd: {
+                private: [
+                    { plan: '3 Months', price: '8$', save: null },
+                    { plan: '1 Year', price: '16$', save: 'Save 50%', popular: true },
+                    { plan: '3 Years', price: '24$', save: 'Save 75%' },
+                    { plan: 'Forever', price: '36$', save: 'Save 99%', best: true },
+                ],
+                group: [
+                    { plan: '3 Months', price: '16$', save: null },
+                    { plan: '1 Year', price: '32$', save: 'Save 50%', popular: true },
+                    { plan: '3 Years', price: '50$', save: 'Save 74%' },
+                    { plan: 'Forever', price: '80$', save: 'Save 99%', best: true },
+                ],
+            }
+        };
+
+        const typeLabels = {
+            private: 'Only you can use Pro features',
+            group: 'Everyone in the group can share Pro features'
+        };
+
+        let currentCurrency = 'vnd';
+        let currentType = 'private';
+
+        function switchCurrency(currency, btn) {
+            currentCurrency = currency;
+            document.querySelectorAll('.pricing-toggle button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderPricing();
+        }
+
+        function switchType(type, btn) {
+            currentType = type;
+            document.querySelectorAll('.pricing-type-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('type-label').textContent = typeLabels[type];
+            renderPricing();
+        }
+
+        function renderPricing() {
+            const plans = pricingData[currentCurrency][currentType];
+            let html = '<table class="pricing-table"><thead><tr><th>Plan</th><th>Price</th></tr></thead><tbody>';
+            plans.forEach(p => {
+                let badge = '';
+                if (p.popular) badge = '<span class="badge badge-popular">Popular</span>';
+                else if (p.best) badge = '<span class="badge badge-best">Best Value</span>';
+                html += `<tr>
+                    <td><div class="pricing-plan">${p.plan} ${badge}</div></td>
+                    <td>
+                        <div class="pricing-value">${p.price}</div>
+                        ${p.save ? `<div class="pricing-save">${p.save}</div>` : ''}
+                    </td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            document.getElementById('pricing-content').innerHTML = html;
+        }
+
+        renderPricing();
+
         function openBot(command) {
             const url = `https://t.me/${BOT_USERNAME}?start=${encodeURIComponent(command)}`;
             if (window.Telegram && window.Telegram.WebApp) {
@@ -799,17 +1034,7 @@
                 webApp.expand();
 
                 const theme = webApp.themeParams;
-                if (theme) {
-                    const root = document.documentElement;
-                    if (theme.bg_color) root.style.setProperty('--tg-theme-bg-color', theme.bg_color);
-                    if (theme.text_color) root.style.setProperty('--tg-theme-text-color', theme.text_color);
-                    if (theme.hint_color) root.style.setProperty('--tg-theme-hint-color', theme.hint_color);
-                    if (theme.button_color) root.style.setProperty('--tg-theme-button-color', theme.button_color);
-                    if (theme.button_text_color) root.style.setProperty('--tg-theme-button-text-color', theme.button_text_color);
-                    if (theme.secondary_bg_color) root.style.setProperty('--tg-theme-secondary-bg-color', theme.secondary_bg_color);
-                }
-
-                document.body.style.backgroundColor = theme.bg_color || '#0f0f1a';
+                // Force black theme regardless of Telegram theme
             }
         });
     </script>
