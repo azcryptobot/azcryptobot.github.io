@@ -326,6 +326,47 @@
             border: 1px solid #2a2a2a;
         }
 
+        /* Payment Methods */
+        .payment-section {
+            margin-top: 24px;
+        }
+        .payment-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ccc;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .payment-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 16px 12px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .payment-card:active { transform: scale(0.97); border-color: #333; }
+        a.payment-card { text-decoration: none; color: inherit; }
+        .payment-icon {
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+        .payment-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #eee;
+        }
+        .payment-sub {
+            font-size: 10px;
+            color: #666;
+            margin-top: 2px;
+        }
+
         /* CTA buttons */
         .cta-group {
             display: flex;
@@ -351,6 +392,24 @@
         }
 
         .btn:active { transform: scale(0.97); }
+
+        .sample-chart-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #111;
+            border: 1px solid #2a2a2a;
+            color: var(--accent-light);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .sample-chart-btn:active { transform: scale(0.97); border-color: #333; }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--accent), #8b7cf7);
@@ -645,6 +704,8 @@
                     <div class="label">Core Features</div>
                 </div>
             </div>
+
+            <a class="sample-chart-btn" href="https://t.me/AzCryptoBot?start=BinanceChart-BTCUSDT_H4_XXX" target="_blank">Sample Chart &#x1F4CA;</a>
 
             <!-- Price Tracking -->
             <div class="section">
@@ -1052,6 +1113,32 @@
                 <a href="https://t.me/AzCryptoBot?start=ListFreeChannels-Premium" target="_blank">&#x1F48E; Premium Channels &#x1F48E;</a>
             </div>
 
+            <div class="payment-section">
+                <div class="payment-section-title">Payment Methods</div>
+                <div class="payment-grid">
+                    <a class="payment-card" href="https://t.me/AzCryptoBot?start=FullVersion" target="_blank">
+                        <div class="payment-icon">&#x2B50;</div>
+                        <div class="payment-label">Telegram Stars</div>
+                        <div class="payment-sub">Pay via Stars</div>
+                    </a>
+                    <a class="payment-card" href="https://t.me/AzCryptoBot?start=FullVersion" target="_blank">
+                        <div class="payment-icon">&#x1F499;</div>
+                        <div class="payment-label">@CryptoBot</div>
+                        <div class="payment-sub">Telegram Pay</div>
+                    </a>
+                    <a class="payment-card" href="https://t.me/AzCryptoBot?start=FullVersion" target="_blank">
+                        <div class="payment-icon">&#x1F4B0;</div>
+                        <div class="payment-label">Crypto &middot; Binance</div>
+                        <div class="payment-sub">USDT / BNB</div>
+                    </a>
+                    <a class="payment-card" href="https://t.me/AzCryptoBot?start=FullVersion" target="_blank">
+                        <div class="payment-icon">&#x1F4F1;</div>
+                        <div class="payment-label">VND QR Code</div>
+                        <div class="payment-sub">Bank Transfer</div>
+                    </a>
+                </div>
+            </div>
+
             <div class="cta-group">
                 <a class="btn btn-primary" href="https://t.me/AzCryptoBot?start=FullVersion" target="_blank">Activate Pro</a>
                 <a class="btn btn-secondary" href="https://t.me/AzCryptoBot?start=FromMiniApp" target="_blank">Open Bot</a>
@@ -1082,7 +1169,7 @@
             <div id="channels-content"></div>
 
             <div class="cta-group">
-                <a class="btn btn-primary" href="https://t.me/AzCryptoBot?start=pro" target="_blank">Activate Pro</a>
+                <a class="btn btn-primary" href="https://t.me/AzCryptoBot?start=FullVersion" target="_blank">Activate Pro</a>
                 <a class="btn btn-secondary" href="https://t.me/AzCryptoBot" target="_blank">Open Bot</a>
             </div>
 
